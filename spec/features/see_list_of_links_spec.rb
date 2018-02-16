@@ -1,7 +1,7 @@
 feature 'Viewing links' do
   scenario 'A user can see links' do
     visit('/')
-    expect(page).to have_content "http://www.facebook.com"
+    expect(page).to have_content "Facebook"
   end
 end
 
@@ -10,5 +10,28 @@ feature 'Wants to submit a new link' do
     visit('/')
     click_button("Add new link")
     expect(page).to have_content("Add new links here!")
+  end
+end
+
+feature 'Wants to delete a bookmark' do
+  scenario 'A user can delete a link from the bookmark list' do
+    visit('/')
+    within("//li[@id='1']") do
+      click_button("Delete")
+    end
+    expect(page).not_to have_content("Makers Academy")
+  end
+end
+
+feature 'Wants to update a bookmark' do
+  scenario 'A user can update a link from the bookmark list' do
+    visit('/')
+    within("//li[@id='1']") do
+      click_button("Update")
+    end
+    fill_in 'update', with: "http://www.reddit.com"
+    click_button("Update")
+    expect(page).not_to have_content("Makers Academy")
+    expect(page).to have_content("Reddit")
   end
 end

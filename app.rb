@@ -21,8 +21,6 @@ class BookmarkManager < Sinatra::Base
   end
 
   post '/create_new_link' do
-    # redirect '/' if Link.add_new_link(params[:new_link])
-    # flash[:error] = "This is not a link"
     begin
       Link.add_new_link(params[:new_link])
       redirect '/'
@@ -30,6 +28,25 @@ class BookmarkManager < Sinatra::Base
       flash[:notice] = error.message
     end
     redirect('/add_link')
+  end
+
+  post '/delete' do
+    Link.delete(params[:id])
+    redirect '/'
+  end
+
+  post '/update' do
+    session[:id] = params[:id]
+    redirect '/update'
+  end
+
+  get '/update' do
+    erb :update
+  end
+
+  post '/updated' do
+    Link.update(session[:id], params[:update])
+    redirect '/'
   end
 
   run! if app_file == $0

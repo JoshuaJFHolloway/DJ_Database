@@ -6,6 +6,16 @@
 
 <ul>
   <% @links.each do |link| %>
-  <li><%= link %></li>
+      <li id="<%= link.id %>">
+      <a href="<%= link.url %>"><%= link.title %></a>
+        <form action="/delete" method="post">
+          <input type="hidden" name="id" value="<%= link.id %>">
+          <input type="submit" value="Delete">
+        </form>
+        <form action="/update" method="post">
+          <input type="hidden" name="id" value="<%= link.id %>">
+          <input type="submit" value="Update">
+        </form>
+        </li>
   <% end %>
 </ul>
