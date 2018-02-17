@@ -1,6 +1,6 @@
 <h2> If you want to add new links then click the button below! </h2>
 
-<form action="/add_link" method="post">
+<form action="/links/add_link" method="post">
   <input type="submit" value="Add new link">
 </form>
 
@@ -8,14 +8,20 @@
   <% @links.each do |link| %>
       <li id="<%= link.id %>">
       <a href="<%= link.url %>"><%= link.title %></a>
-        <form action="/delete" method="post">
+        <form action="/links/<%= link.id %>/delete" method="post">
           <input type="hidden" name="id" value="<%= link.id %>">
           <input type="submit" value="Delete">
         </form>
-        <form action="/update" method="post">
+        <form action="/links/<%= link.id %>/update" method="post">
           <input type="hidden" name="id" value="<%= link.id %>">
           <input type="submit" value="Update">
         </form>
+        <form action="/links/<%= link.id %>/add_a_comment" method="post">
+          <input type="hidden" name="id" value="<%= link.id %>">
+          <input type="text" name="comment" placeholder="Write a thoughtful message here...">
+          <input type="submit" value="Comment">
+        </form>
+        
         </li>
   <% end %>
 </ul>

@@ -8,45 +8,50 @@ class BookmarkManager < Sinatra::Base
   register Sinatra::Flash
 
   get '/' do
+    redirect '/links'
+  end
+
+  get '/links' do
     @links = Link.all
     erb :index
   end
 
-  get '/add_link' do
+  get '/links/add_link' do
     erb :add_new_links
   end
 
-  post '/add_link' do
-    erb :add_new_links
+  post '/links/add_link' do
+    redirect '/links/add_link'
   end
 
-  post '/create_new_link' do
+  post '/links/create_new_link' do
     begin
       Link.add_new_link(params[:new_link])
-      redirect '/'
+      redirect '/links'
     rescue Exception => error
       flash[:notice] = error.message
     end
-    redirect('/add_link')
+    redirect('/links/add_link')
   end
 
-  post '/delete' do
+  post '/links/:id/delete' do
     Link.delete(params[:id])
-    redirect '/'
+    redirect '/links'
   end
 
-  post '/update' do
+  post '/links/:id/update' do
     session[:id] = params[:id]
-    redirect '/update'
+    redirect '/links/:id/update'
   end
 
-  get '/update' do
+  get '/links/:id/update' do
+    @session_id = session[:id] 
     erb :update
   end
 
-  post '/updated' do
+  post '/links/:id/updated' do
     Link.update(session[:id], params[:update])
-    redirect '/'
+    redirect '/links'
   end
 
   run! if app_file == $0

@@ -1,7 +1,7 @@
 <h1> You can update here! HAVE FUN </h1>
 
 
-<form action="/updated" method="post">
+<form action="/links/<%= @session_id %>/updated" method="post">
   <input type="text" name="update">
   <input type="submit" value="Update">
 </form>
